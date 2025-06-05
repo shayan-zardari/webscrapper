@@ -5,5 +5,10 @@ const authRouter = new Router();
 
 authRouter.post('/register', authController.register);
 
+authRouter.post('/verify-email', authController.verify);
+
+authRouter.post('/resend-verification-email', authController.resendVerificationEmail);
+
+authRouter.post('/login', authController.login);
 
 export default authRouter;

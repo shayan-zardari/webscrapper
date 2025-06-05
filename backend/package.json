@@ -17,8 +17,10 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.3",
     "nodemon": "^3.1.10",
-    "validate": "^5.2.0"
+    "random": "^5.4.0",
+    "zod": "^3.25.51"
   },
   "devDependencies": {
     "prisma": "^6.8.2"
