@@ -3,15 +3,15 @@ import random from "random";
 import prisma from "../config/prismaClient.js";
 import signupEmail from "../mails/signup.mail.js";
 import jwt from "jsonwebtoken";
-
-
+import { z } from "zod";
+import userValidationSchema from "../helpers/userValidationSchema.js";
 
 const authController = {
   register: async (req, res) => {
     try {
       userValidationSchema.parse(req.body);
 
-      const hashedPassword = await bcrypt.hash(req.body.password, process.env.SALTROUNDS);
+      const hashedPassword = await bcrypt.hash(req.body.password, 10); // process.env.SALTROUNDS
 
       const user = await prisma.user.create({
         data: {
@@ -75,7 +75,7 @@ const authController = {
 
       return res.status(200).json({
         "message": `Sucessfully verfied for ${user.email}`,
-        updated_user
+        user: updated_user
       });
 
     } catch (error) {
@@ -131,8 +131,9 @@ const authController = {
     };
 
   },
-  login: async (req, res) => {
 
+  login: async (req, res) => {
+    console.log(req.body);
     // store email and password (from request's body) into constants
     const email = req.body.email;
     const password = req.body.password;
@@ -158,9 +159,7 @@ const authController = {
       // if the password entered is correct
       if (await bcrypt.compare(password, loginUser.password)) {
         // if the profile is not verified, throw new error
-        if (!loginUser.profile_verified) {
-            throw new Error("Email not verified.");
-        } else {
+       
           // make a jwt token with the payload email and user id
           const authToken = await jwt.sign(
             {
@@ -173,16 +172,17 @@ const authController = {
             });
           // send that jwt token in response
           return res.status(200).json({
-            "token" : authToken
+            "token" : authToken,
+            "user": loginUser
           });
-        };
+
       } else {
         // if incorrect password throw new error
         throw new Error("Invalid email or password.");
       };
 
     } catch (error) {
-        return res.status(404).json({
+        return res.status(500).json({
           "error": "User not verified, or wrong nm/email or password."
         });
     };
