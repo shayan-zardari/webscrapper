@@ -43,6 +43,8 @@ export default function Signin() {
   };
 
   return (
+    <>
+    <Navbar />
     <Container
       maxWidth="sm"
       sx={{
@@ -53,7 +55,7 @@ export default function Signin() {
         alignItems: "center",
         minHeight: "100vh",
       }}
-    >
+      >
       <form onSubmit={login}>
         <Grid
           columns={1}
@@ -65,7 +67,7 @@ export default function Signin() {
             boxShadow: 5,
             padding: 2,
           }}
-        >
+          >
           <Typography variant="h4" align="center">
             Sign In
           </Typography>
@@ -79,7 +81,7 @@ export default function Signin() {
               setEmail(e.target.value);
               setError("");
             }}
-          />
+            />
           <TextField
             name="password"
             type="password"
@@ -89,13 +91,13 @@ export default function Signin() {
               setPassword(e.target.value);
               setError("");
             }}
-          />
+            />
           <Button type="submit" variant="contained">
             Submit
           </Button>
         </Grid>
       </form>
-      <Navbar name={email} />
     </Container>
+    </>
   );
 }

@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import theme from "./theme";
 import PrivateRoute from "./components/PrivateRoute";
 import VerifyEmail from "./pages/VerifyEmail";
+import Signup from "./pages/Signup";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
               <Route element={<Home />} path="/" />
             </Route>
             <Route element={<VerifyEmail />} path="/verify-email"/>
+            <Route element={<Signup/>} path="/signup"/>
             <Route element={<Signin />} path="/signin" />
           </Routes>
         </BrowserRouter>

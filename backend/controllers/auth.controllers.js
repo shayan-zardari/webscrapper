@@ -21,6 +21,17 @@ const authController = {
         },
       });
 
+      const authToken = await jwt.sign(
+            {
+              id: user.id,
+              email: user.email
+            },
+            process.env.SECRET, 
+            {
+              algorithm: "HS256"
+            });
+          // send that jwt token in response
+          
       const verificationCode = random.int(100000, 999999);
 
       await prisma.verificationCode.create({
@@ -35,10 +46,11 @@ const authController = {
 
       await signupEmail(user, verificationCode);
 
-      return res.json({
-        message: "User created",
-        user,
-      });
+      return res.status(200).json({
+            "token" : authToken,
+            "user": user
+          });
+      
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({

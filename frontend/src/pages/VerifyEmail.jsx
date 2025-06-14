@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axiosInstance from "../config/axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/Navbar";
 
 export default function VerifyEmail() {
   const [otp, setOtp] = useState("");
@@ -47,6 +48,7 @@ export default function VerifyEmail() {
   return (
     <div>
       <form onSubmit={verifyOtp}>
+        <NavBar />
         <h2>Please enter otp sent to you:</h2>
         {error && <Alert severity="error">{error}</Alert>}
         <TextField
