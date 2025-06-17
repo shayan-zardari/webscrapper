@@ -19,10 +19,16 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^7.0.3",
     "nodemon": "^3.1.10",
+    "puppeteer": "^24.10.1",
     "random": "^5.4.0",
     "zod": "^3.25.51"
   },
   "devDependencies": {
     "prisma": "^6.8.2"
+  },
+  "nodemonConfig": {
+    "events": {
+      "restart": "kill-port 3000 && pkill -f 'chrome|chromium'"
+    }
   }
 }

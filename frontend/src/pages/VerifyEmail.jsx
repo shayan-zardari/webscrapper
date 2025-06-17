@@ -1,4 +1,11 @@
-import { TextField, Button, Alert, Snackbar} from "@mui/material";
+import {
+  TextField,
+  Button,
+  Alert,
+  Paper,
+  Typography,
+  Box,
+} from "@mui/material";
 import React, { useState } from "react";
 import axiosInstance from "../config/axios";
 import { useAuth } from "../contexts/AuthContext";
@@ -45,29 +52,53 @@ export default function VerifyEmail() {
     }
   };
 
-  return (
-    <div>
-      <form onSubmit={verifyOtp}>
-        <NavBar />
-        <h2>Please enter otp sent to you:</h2>
-        {error && <Alert severity="error">{error}</Alert>}
-        <TextField
-          name="otp"
-          type="text"
-          label="OTP"
-          value={otp}
-          onChange={(e) => {
-            setOtp(e.target.value);
-            setError("");
-          }}
-        />
-        <Button type="submit" variant="contained">
-          Verify OTP
-        </Button>
-      </form>
-      <Button variant="contained" onClick={resendOtp}>
-          Resend OTP
-        </Button>
-    </div>
+  return user  ? (
+    <>
+      <NavBar />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Paper sx={{ maxWidth: "sm", p: "20px" }}>
+          <form
+            onSubmit={verifyOtp}
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
+            <Typography variant="h5">Enter the verification code</Typography>
+            {error && <Alert severity="error">{error}</Alert>}
+            <TextField
+              name="otp"
+              type="text"
+              label="OTP"
+              value={otp}
+              onChange={(e) => {
+                setOtp(e.target.value);
+                setError("");
+              }}
+            />
+            <Button type="submit" variant="contained">
+              Verify OTP
+            </Button>
+            <Button variant="contained" onClick={resendOtp}>
+              Resend OTP
+            </Button>
+          </form>
+        </Paper>
+      </Box>
+    </>
+  ) : (
+    <>
+      <NavBar />
+      <Box sx={{display: "flex", flexDirection: "column", height: "100vh", justifyContent: "center", alignItems: "center"}}>
+        <Typography variant="h2">
+          Please login first to verify your email 🙂
+        </Typography>
+      </Box>
+    </>
   );
 }

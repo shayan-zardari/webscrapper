@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRouter from "./routes/auth.routes.js";
+import puppeteerRouter from "./routes/puppeteer.routes.js";
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ app.use(cors());
 
 
 app.use('/auth', authRouter);
+
+app.use('/puppeteer', puppeteerRouter);
 
 
 app.listen( process.env.PORT || 3000, () => {
